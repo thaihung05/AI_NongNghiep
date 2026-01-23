@@ -38,48 +38,9 @@ AI_NongNghiep/
 │       └── model.safetensors
 ```
 
-⚠️ **Không đổi tên thư mục hoặc file**, nếu sai đường dẫn chương trình sẽ không chạy.
 
----
+## 🚀 Cách chạy project
 
-## 🚀 Cách chạy project (rất đơn giản)
-
-### Yêu cầu
-- Đã cài **Python 3.9 trở lên**
-- Đã tải và đặt model đúng như hướng dẫn trên
-
-### ▶️ Chạy chương trình
-Chỉ cần **double-click** vào file:
-
-```
-run.bat
-```
-
-File này sẽ tự động:
-- Tạo virtual environment
-- Kích hoạt môi trường
-- Cài đặt thư viện cần thiết
-- Chuẩn bị vector database
-- Chạy ứng dụng AI
-
-👉 **Không cần gõ lệnh thủ công**
-
----
-
-## 📂 Cấu trúc thư mục chính
-
-```
-AI_NongNghiep/
-│── models/              # Chứa model (không theo dõi bởi Git)
-│── data/                # Dữ liệu đầu vào
-│── src/                 # Mã nguồn
-│── vectorstore/         # Vector database
-│── run.bat              # File chạy tự động
-│── requirements.txt
-│── README.md
-```
-
----
 
 ## 🧠 Bối cảnh nghiên cứu khoa học
 Dự án được thực hiện trong khuôn khổ **nghiên cứu khoa học sinh viên**, tập trung vào:
@@ -96,7 +57,3 @@ Dự án được thực hiện trong khuôn khổ **nghiên cứu khoa học si
 - Mô hình AI được cung cấp qua Google Drive để đảm bảo tái lập nghiên cứu
 - Người dùng chỉ cần tải model và chạy `run.bat`
 
----
-
-## 📬 Liên hệ
-Dự án phục vụ mục đích học tập và nghiên cứu khoa học.
