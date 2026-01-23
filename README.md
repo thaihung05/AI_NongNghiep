@@ -49,17 +49,20 @@ B1: Đứng ở folder AI_NongNghiep
 
 B2: Cài đặt và vào môi trường .venv
 
-B3: Chạy lệnh
+B3: Chạy lệnh sau để tải những thư viện cần thiết:
+```
+pip install -r requirements.txt
+```
+
+B4: Chạy lệnh sau và đợi chương trình thực thi xong (Sẽ tạo ra file vectorstore):
 ```
 python src\prepare_vector_db.py
 ```
-và đợi chương trình thực thi xong (Sẽ tạo ra file vectorstore)
 
-B4: Chạy lệnh
+B5: Chạy lệnh sau để khởi chạy hệ thống:
 ```
 streamlit run app.py
 ```
-để khởi chạy hệ thống
 
 ## 🧠 Bối cảnh nghiên cứu khoa học
 Dự án được thực hiện trong khuôn khổ **nghiên cứu khoa học sinh viên**, tập trung vào:
