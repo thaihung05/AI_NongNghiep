@@ -39,12 +39,15 @@ AI_NongNghiep/
 
 ## 🚀 Cách chạy project:
 B1: Đứng ở folder AI_NongNghiep
+
 B2: Cài đặt và vào môi trường .venv
+
 B3: Chạy lệnh
 ```
 python src\prepare_vector_db.py
 ```
 và đợi chương trình thực thi xong (Sẽ tạo ra file vectorstore)
+
 B4: Chạy lệnh
 ```
 streamlit run app.py
