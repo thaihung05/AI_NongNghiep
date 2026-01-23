@@ -10,8 +10,6 @@ Dự án xây dựng một hệ thống AI hỗ trợ nghiên cứu nông nghi�
 - Cơ chế truy xuất tăng cường (Retrieval-Augmented Generation – RAG)
 - Vector Database phục vụ tìm kiếm ngữ nghĩa
 
-Hệ thống hướng tới việc hỗ trợ sinh viên và nhà nghiên cứu trong việc khai thác tri thức từ tài liệu chuyên ngành nông nghiệp.
-
 ---
 
 ## ⚠️ Lưu ý quan trọng về mô hình AI
@@ -39,8 +37,19 @@ AI_NongNghiep/
 ```
 
 
-## 🚀 Cách chạy project
-
+## 🚀 Cách chạy project:
+B1: Đứng ở folder AI_NongNghiep
+B2: Cài đặt và vào môi trường .venv
+B3: Chạy lệnh
+```
+python src\prepare_vector_db.py
+```
+và đợi chương trình thực thi xong (Sẽ tạo ra file vectorstore)
+B4: Chạy lệnh
+```
+streamlit run app.py
+```
+để khởi chạy hệ thống
 
 ## 🧠 Bối cảnh nghiên cứu khoa học
 Dự án được thực hiện trong khuôn khổ **nghiên cứu khoa học sinh viên**, tập trung vào:
@@ -55,5 +64,4 @@ Dự án được thực hiện trong khuôn khổ **nghiên cứu khoa học si
 ## 📄 Ghi chú cho giảng viên & người đánh giá
 - Repository chỉ chứa **mã nguồn**, không chứa file dung lượng lớn
 - Mô hình AI được cung cấp qua Google Drive để đảm bảo tái lập nghiên cứu
-- Người dùng chỉ cần tải model và chạy `run.bat`
 
