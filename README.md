@@ -36,6 +36,13 @@ AI_NongNghiep/
 │       └── model.safetensors
 ```
 
+## 📦 Lấy key API Gemini:
+B1: Vào google AI studio
+
+B2: Lấy API key về
+
+B3: Dán vào file ".env"
+
 
 ## 🚀 Cách chạy project:
 B1: Đứng ở folder AI_NongNghiep
