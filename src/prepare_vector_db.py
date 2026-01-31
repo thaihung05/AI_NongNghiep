@@ -11,8 +11,8 @@ def creat_db_from_files():
     documents = loader.load()
     
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=512,
-        chunk_overlap=50
+        chunk_size=700,
+        chunk_overlap=150
     )
     chunks = text_splitter.split_documents(documents)
     

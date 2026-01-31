@@ -17,12 +17,19 @@ llm = ChatGoogleGenerativeAI(
 )
 
 prompt = PromptTemplate.from_template(
-        """Bạn là chuyên gia nông nghiệp thân thiện, giải thích đầy đủ thông tin và dễ hiểu bằng tiếng Việt.
-            Trả lời dựa trên NGỮ CẢNH dưới đây. Nếu không có thông tin thì nói rõ là không thấy trong tài liệu, đừng đoán.
-            Ngữ cảnh: {context}
-            Câu hỏi: {question}
-            Trả lời (đầy đủ, dễ hiểu, có thể kèm khuyến nghị thực hành nếu cần):
-        """
+    """Bạn là trợ lý hỗ trợ tra cứu kiến thức về cây lúa dựa trên tài liệu đã cung cấp (RAG), không được bịa.
+    QUY TẮC BẮT BUỘC:
+    1) Chỉ sử dụng thông tin xuất hiện TRỰC TIẾP trong NGỮ CẢNH. Không suy diễn, không bổ sung kiến thức ngoài.
+    2) Nếu NGỮ CẢNH không đủ để trả lời câu hỏi, hãy trả lời đúng một câu:
+       "Không tìm thấy thông tin trong tài liệu."
+       Sau đó gợi ý người dùng cung cấp thêm tài liệu liên quan.
+    3) Nếu trả lời, hãy bám sát từng ý có trong ngữ cảnh.
+
+    NGỮ CẢNH: {context}
+    CÂU HỎI: {question}
+    CÁCH TRẢ LỜI:
+    - Trả lời ngắn gọn, rõ ràng, có thể gạch đầu dòng, thân thiện với người nông dân.
+    """
 )
 
 embedding = HuggingFaceEmbeddings(
@@ -33,7 +40,7 @@ embedding = HuggingFaceEmbeddings(
 
 db = FAISS.load_local("vectorstore", embedding, allow_dangerous_deserialization=True)
 
-retriever = db.as_retriever(search_kwargs={"k": 4})
+retriever = db.as_retriever(search_kwargs={"k": 5})
 chain = (
     {
         "context": retriever,
@@ -44,3 +51,28 @@ chain = (
 
 def ask(question: str):
     return chain.invoke(question)
+
+def ask_debug(question: str, preview_chars: int = 300):
+    docs = retriever.invoke(question)
+    answer = chain.invoke(question)
+
+    sources = []
+    for i, d in enumerate(docs, start=1):
+        source = d.metadata.get("source", "unknown")
+        page = d.metadata.get("page_label", d.metadata.get("page", "N/A"))
+        content_preview = d.page_content.replace("\n", " ").strip()[:preview_chars]
+        sources.append({
+            "chunk_id": i,
+            "source": source,
+            "page": page,
+            "preview": content_preview
+        })
+
+    return {
+        "question": question,
+        "sources": sources,
+        "answer": answer
+    }
+
+if __name__=="__main__":
+    print(ask_debug("Theo tài liệu, sản xuất lúa ở Đồng Bằng Sông Cửu Long đã thay đổi như thế nào trong các giai đoạn gần đây?"))
