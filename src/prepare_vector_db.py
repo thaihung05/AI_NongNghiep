@@ -1,19 +1,16 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter, CharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 
-pdf_data_path = "data"
+file_path = "data"
 vector_db_path = "vectorstore"
 
 def creat_db_from_files():
-    loader = DirectoryLoader(pdf_data_path, glob="*.pdf", loader_cls= PyPDFLoader)
+    loader = DirectoryLoader(file_path, glob="*.pdf", loader_cls= PyPDFLoader)
     documents = loader.load()
     
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=700,
-        chunk_overlap=150
-    )
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=700,chunk_overlap=150)
     chunks = text_splitter.split_documents(documents)
     
     embedding_models = HuggingFaceEmbeddings(

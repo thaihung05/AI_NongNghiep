@@ -22,13 +22,12 @@ def ui_css(theme="green"):
 ui_css()
 
 st.markdown(
-        "<h1 style='text-align: center;'>AI tư vấn trồng lúa</h1>"
-        ,unsafe_allow_html=True
+            "<h1 style='text-align: center;'>AI tư vấn trồng lúa</h1>",unsafe_allow_html=True
         )
 st.markdown(
-        "<h5 style='text-align: center;'>Chào bạn! Tui sẽ giải đáp những thắc mắc về nông nghiệp cho bạn!</h5>"
-        ,unsafe_allow_html=True
-    )
+            "<h5 style='text-align: center;'>Chào bạn! Tui sẽ giải đáp những thắc mắc về nông nghiệp cho bạn!</h5>"
+            ,unsafe_allow_html=True
+        )
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
