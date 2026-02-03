@@ -12,23 +12,28 @@ load_dotenv()
 API_KEY = os.getenv("GOOGLE_API_KEY")
 
 llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
+    model="gemini-3-flash-preview",
     google_api_key=API_KEY,
     temperature=0.2,
 )
 
 prompt = PromptTemplate.from_template(
-    """Bạn là trợ lý hỗ trợ tra cứu kiến thức về cây lúa dựa trên tài liệu đã cung cấp (RAG), không được bịa.
-    QUY TẮC BẮT BUỘC:
-    1) Chỉ sử dụng thông tin xuất hiện TRỰC TIẾP trong NGỮ CẢNH. Không suy diễn, không bổ sung kiến thức ngoài.
-    2) Nếu trong NGỮ CẢNH không có thông tin TRỰC TIẾP trả lời câu hỏi,hoặc thông tin chỉ liên quan một phần,
-        bạn PHẢI trả lời đúng một câu duy nhất:
-        "Không tìm thấy thông tin trong tài liệu."
-        KHÔNG giải thích thêm.  
-    3) Nếu trả lời, hãy bám sát từng ý có trong ngữ cảnh.
+    """Bạn là trợ lý chuyên môn nông nghiệp, có nhiệm vụ trả lời câu hỏi về kỹ thuật canh tác cây lúa dựa CHỈ trên các tài liệu được cung cấp.
+    NGỮ CẢNH ĐƯỢC CUNG CẤP:
+    {context}
+    CÂU HỎI CỦA NGƯỜI DÙNG:
+    {question}
 
-    NGỮ CẢNH: {context}
-    CÂU HỎI: {question}
+    Lưu ý khi trả lời:
+    1. Chỉ sử dụng thông tin CÓ trong ngữ cảnh trên. Tuyệt đối không tự nghĩ ra hoặc dùng kiến thức bên ngoài.
+    2. Xử lý thông tin thiếu: 
+       - Nếu ngữ cảnh hoàn toàn không có thông tin: Trả lời "Tài liệu không đề cập đến vấn đề này.". Và hướng dẫn tìm nội dung trên những phương thức khác.
+       - Nếu ngữ cảnh chỉ trả lời được một phần câu hỏi nhưng vẫn "đúng ý của câu hỏi": Hãy trả lời phần đó và ghi chú rõ "Tài liệu chỉ cung cấp thông tin về [nội dung có], chưa có thông tin về [nội dung thiếu]."
+    3. Trích dẫn (Quan trọng): Khi đưa ra số liệu (ví dụ: lượng phân bón, năng suất, mật độ sạ, ...), hãy cố gắng nhắc đến nguồn nếu có trong ngữ cảnh (ví dụ: "Theo luận án tiến sĩ..." hoặc "Theo Sổ tay hướng dẫn 1 triệu ha...").
+    4. Trình bày: Sử dụng gạch đầu dòng cho các quy trình kỹ thuật hoặc danh sách để dễ đọc.
+    5. Không được suy luận, tổng hợp, hoặc khái quát vượt quá thông tin xuất hiện trực tiếp trong ngữ cảnh, kể cả khi bạn "biết" kiến thức đó là đúng.
+    
+    CÂU TRẢ LỜI:
     """
 )
 
@@ -84,7 +89,6 @@ def ask_debug(question):
         sources.append({
             "chunk_id": i,
             "source": source,
-            "page": page,
             "preview": content_preview
         })
 
@@ -95,6 +99,7 @@ def ask_debug(question):
     }
 
 if __name__=="__main__":
-    print(ask_debug("Gieo sạ lúa với mật độ quá dày sẽ gây ra những vấn đề gì trong quá trình sinh trưởng và phòng trừ sâu bệnh?"))
+    question_input = "Theo tài liệu, việc gieo sạ không đúng thời vụ có thể dẫn đến những rủi ro gì trong sản xuất lúa?"
+    print(ask_debug(question_input))
 # if __name__=="__main__":
 #     print(ask("Gieo sạ lúa với mật độ quá dày sẽ gây ra những vấn đề gì trong quá trình sinh trưởng và phòng trừ sâu bệnh?"))
