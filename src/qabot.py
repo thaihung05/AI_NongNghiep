@@ -12,7 +12,7 @@ load_dotenv()
 API_KEY = os.getenv("GOOGLE_API_KEY")
 
 llm = ChatGoogleGenerativeAI(
-    model="gemini-3-flash-preview",
+    model="gemini-2.5-flash",
     google_api_key=API_KEY,
     temperature=0.2,
 )
@@ -49,7 +49,6 @@ retriever = db.as_retriever(search_kwargs={"k": 5})
 @st.cache_resource
 def load_chain():
     memory = ConversationBufferMemory(
-        k=2,
         memory_key="chat_history",
         return_messages=True,
         output_key="answer"
@@ -80,7 +79,8 @@ def ask_debug(question):
     sources = []
     for i, d in enumerate(docs, start=1):
         source = d.metadata.get("source")
-        content_preview = " ".join(d.page_content.split())[:300]
+        text = " ".join(d.page_content.slip())
+        content_preview = text[:300]
         sources.append({
             "chunk_id": i,
             "source": source,

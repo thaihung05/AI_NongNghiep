@@ -7,18 +7,17 @@ st.set_page_config(
     layout="centered"
 )
 
-def ui_css(theme="green"):
+def ui_css():
     bg = "radial-gradient(1000px 800px at 50% 50%, #A5D6A7 0%, #E8F5E9 50%, #C8E6C9 100%)"
     st.markdown(f"""
-    <style>
-        html, body, [data-testid="stAppViewContainer"] {{
-            font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-            background: {bg};
-            color: #1B1B1B;
-        }}
-    </style>
+        <style>
+            html, body, [data-testid="stAppViewContainer"] {{
+                font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+                background: {bg};
+                color: #1B1B1B;
+            }}
+        </style>
     """, unsafe_allow_html=True)
-
 ui_css()
 
 st.markdown(

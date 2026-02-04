@@ -15,7 +15,6 @@ def creat_db_from_files():
     
     embedding_models = HuggingFaceEmbeddings(
         model_name="models/vietnamese-document-embedding",
-        model_kwargs={"trust_remote_code": True},
         encode_kwargs={"normalize_embeddings": True}
     )
     
