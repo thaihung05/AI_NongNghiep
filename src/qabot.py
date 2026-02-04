@@ -18,22 +18,18 @@ llm = ChatGoogleGenerativeAI(
 )
 
 prompt = PromptTemplate.from_template(
-    """Bạn là trợ lý chuyên môn nông nghiệp, có nhiệm vụ trả lời câu hỏi về kỹ thuật canh tác cây lúa dựa CHỈ trên các tài liệu được cung cấp.
-    NGỮ CẢNH ĐƯỢC CUNG CẤP:
-    {context}
-    CÂU HỎI CỦA NGƯỜI DÙNG:
-    {question}
+    """Bạn là trợ lý chuyên môn nông nghiệp. Hãy trả lời câu hỏi về kỹ thuật canh tác lúa chỉ dựa trên ngữ cảnh được cung cấp.
 
-    Lưu ý khi trả lời:
-    1. Chỉ sử dụng thông tin CÓ trong ngữ cảnh trên. Tuyệt đối không tự nghĩ ra hoặc dùng kiến thức bên ngoài.
-    2. Xử lý thông tin thiếu: 
-       - Nếu ngữ cảnh hoàn toàn không có thông tin: Trả lời "Tài liệu không đề cập đến vấn đề này.". Và hướng dẫn tìm nội dung trên những phương thức khác.
-       - Nếu ngữ cảnh chỉ trả lời được một phần câu hỏi nhưng vẫn "đúng ý của câu hỏi": Hãy trả lời phần đó và ghi chú rõ "Tài liệu chỉ cung cấp thông tin về [nội dung có], chưa có thông tin về [nội dung thiếu]."
-    3. Trích dẫn (Quan trọng): Khi đưa ra số liệu (ví dụ: lượng phân bón, năng suất, mật độ sạ, ...), hãy cố gắng nhắc đến nguồn nếu có trong ngữ cảnh (ví dụ: "Theo luận án tiến sĩ..." hoặc "Theo Sổ tay hướng dẫn 1 triệu ha...").
-    4. Trình bày: Sử dụng gạch đầu dòng cho các quy trình kỹ thuật hoặc danh sách để dễ đọc.
-    5. Không được suy luận, tổng hợp, hoặc khái quát vượt quá thông tin xuất hiện trực tiếp trong ngữ cảnh, kể cả khi bạn "biết" kiến thức đó là đúng.
-    
-    CÂU TRẢ LỜI:
+        NGỮ CẢNH ĐƯỢC CUNG CẤP: {context}
+        CÂU HỎI CỦA NGƯỜI DÙNG: {question}
+
+        Quy tắc trả lời:
+        - Chỉ dùng thông tin trong ngữ cảnh. Không suy đoán, không dùng kiến thức ngoài.
+        - Nếu ngữ cảnh không có thông tin: trả lời đúng câu "Tài liệu không đề cập đến vấn đề này.".
+        - Nếu ngữ cảnh chỉ trả lời được một phần: trả lời phần có trong tài liệu và ghi rõ
+        "Tài liệu chỉ cung cấp thông tin về [nội dung có], chưa có thông tin về [nội dung thiếu]."
+        - Trình bày rõ ràng; dùng gạch đầu dòng cho quy trình hoặc danh sách.
+        - Giọng điệu thân thiện, gần gũi như kỹ sư nông nghiệp, nhưng không bịa.
     """
 )
 
@@ -84,7 +80,6 @@ def ask_debug(question):
     sources = []
     for i, d in enumerate(docs, start=1):
         source = d.metadata.get("source")
-        page = d.metadata.get("page_label")
         content_preview = " ".join(d.page_content.split())[:300]
         sources.append({
             "chunk_id": i,
@@ -99,7 +94,6 @@ def ask_debug(question):
     }
 
 if __name__=="__main__":
-    question_input = "Theo tài liệu, việc gieo sạ không đúng thời vụ có thể dẫn đến những rủi ro gì trong sản xuất lúa?"
+    question_input = "Theo tài liệu, việc sử dụng giống lúa có thời gian sinh trưởng ngắn mang lại những thuận lợi gì trong sản xuất?"
     print(ask_debug(question_input))
-# if __name__=="__main__":
-#     print(ask("Gieo sạ lúa với mật độ quá dày sẽ gây ra những vấn đề gì trong quá trình sinh trưởng và phòng trừ sâu bệnh?"))
+    # print(ask(question_input))
