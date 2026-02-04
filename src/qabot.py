@@ -12,7 +12,7 @@ load_dotenv()
 API_KEY = os.getenv("GOOGLE_API_KEY")
 
 llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
+    model="gemini-3-flash-preview",
     google_api_key=API_KEY,
     temperature=0.2,
 )
@@ -79,7 +79,7 @@ def ask_debug(question):
     sources = []
     for i, d in enumerate(docs, start=1):
         source = d.metadata.get("source")
-        text = " ".join(d.page_content.slip())
+        text = " ".join(d.page_content.split())
         content_preview = text[:300]
         sources.append({
             "chunk_id": i,
@@ -94,6 +94,6 @@ def ask_debug(question):
     }
 
 if __name__=="__main__":
-    question_input = "Theo tài liệu, việc sử dụng giống lúa có thời gian sinh trưởng ngắn mang lại những thuận lợi gì trong sản xuất?"
+    question_input = "Bệnh đạo ôn cổ bông là gì?"
     print(ask_debug(question_input))
     # print(ask(question_input))
