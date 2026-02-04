@@ -70,11 +70,10 @@ Dự án được thực hiện trong khuôn khổ **nghiên cứu khoa học si
 - Xử lý ngôn ngữ tự nhiên (NLP) tiếng Việt
 - Embedding & Vector Search
 - Retrieval-Augmented Generation (RAG)
-- Hướng tới khả năng mở rộng và giải thích mô hình (XAI)
 
 ---
 
 ## Ghi chú cho giảng viên & người đánh giá
 - Repository chỉ chứa **mã nguồn**, không chứa file dung lượng lớn
-- Mô hình AI được cung cấp qua Google Drive để đảm bảo tái lập nghiên cứu
+- Mô hình AI được cung cấp qua Google Drive
 
